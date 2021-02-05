@@ -22,9 +22,11 @@
         left: 0;
     }
 </style>
+
+
 <body id="wrapper">
     <div class="unit" id="unit"></div>
 
-    <script src="client/app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
