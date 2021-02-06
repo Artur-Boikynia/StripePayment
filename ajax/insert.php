@@ -1,18 +1,19 @@
 <?php
-declare(strict_types=1);
 
-error_reporting(E_ALL);
+$dbh = new PDO('mysql:host=db;dbname=artur_shop','artur_base','artur_pwd');
+$sql ="INSERT INTO `tab` (`title`) VALUES (:title)";
+$stmt = $dbh->prepare($sql);
 
-//require_once __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/Prob.php';
+$pdoExec = $stmt->execute(
+[
+    'title' => 'tit',
+]
+);
 
-$dbh = new Prob();
-
-
-//$dbh = new DB('localhost', 'artur_base', );
-//$dbh = new PDO('mysql:host=localhost;dbname=artur_shop','artur_base','artur_pwd');
-
-/*$stmt = $dbh->prepare("INSERT INTO `news` (title, text) VALUES (:title, :text)");
-$stmt->bindParam(':title', $_POST['title']);
-$stmt->bindParam(':text', $_POST['text']);
-$stmt->execute();*/
+if($pdoExec){
+    echo 'good';
+}
+else{
+    echo 'bed';
+}
+//var_dump($_POST['title'], $_POST['text']);
