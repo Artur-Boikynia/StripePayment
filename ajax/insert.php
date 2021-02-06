@@ -1,19 +1,15 @@
 <?php
 
 $dbh = new PDO('mysql:host=db;dbname=artur_shop','artur_base','artur_pwd');
-$sql ="INSERT INTO `tab` (`title`) VALUES (:title)";
+$sql ="INSERT INTO `tabs` (`title`, `text`) VALUES (:title, :text)";
+$sql ="SELECT * FROM `tabs` ORDER BY `id` DESC LIMIT 2";
 $stmt = $dbh->prepare($sql);
 
-$pdoExec = $stmt->execute(
-[
-    'title' => 'tit',
-]
-);
+$pdoExec = $stmt->execute();
 
-if($pdoExec){
-    echo 'good';
-}
-else{
-    echo 'bed';
-}
-//var_dump($_POST['title'], $_POST['text']);
+$result = $stmt->fetchAll();
+
+echo json_encode($result);
+
+
+
