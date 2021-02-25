@@ -1,10 +1,10 @@
 <?php
 
-use Stripe\Stripe;
-use Slim\Http\Request;
+/*use Slim\Http\Request;
 use Slim\Http\Response;
+use Stripe\Stripe;
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $app = new \Slim\App;
 
@@ -21,11 +21,11 @@ $app->post('/create-checkout-session', function (Request $request, Response $res
             'price_data' => [
                 'currency' => 'usd',
                 'product_data' => [
-                    'name' => 'qwert432y',
+                    'name' => 'T-shirt',
                 ],
-                'unit_amount' => 3300,
+                'unit_amount' => 2000,
             ],
-            'quantity' => 2,
+            'quantity' => 1,
         ]],
         'mode' => 'payment',
         'success_url' => 'https://example.com/success.html',
@@ -35,7 +35,4 @@ $app->post('/create-checkout-session', function (Request $request, Response $res
     return $response->withJson([ 'id' => $session->id ])->withStatus(200);
 });
 
-$app->run();
-
-
-
+$app->run();*/
