@@ -15,20 +15,26 @@ $app->add(function ($request, $response, $next) {
 });
 
 $app->post('/create-checkout-session', function (Request $request, Response $response) {
+    $params = json_decode($request->getBody());
+    $payment_method_types = [
+        'usd' => ['card','alipay'],
+        'eur' => ['card', 'ideal', 'giropay'],
+        'pln' => ['card'],
+    ] ;
     $session = \Stripe\Checkout\Session::create([
         'payment_method_types' => ['card'],
         'line_items' => [[
             'price_data' => [
-                'currency' => 'usd',
+                'currency' => $params->currency,
                 'product_data' => [
-                    'name' => 'qwert432y',
+                    'name' => $params->cause,
                 ],
-                'unit_amount' => 3300,
+                'unit_amount' => $params->amount,
             ],
-            'quantity' => 2,
+            'quantity' => 1,
         ]],
         'mode' => 'payment',
-        'success_url' => 'https://example.com/success.html',
+        'success_url' => 'http://my.local/client//success.php',
         'cancel_url' => 'https://example.com/cancel.html',
     ]);
 
@@ -36,6 +42,84 @@ $app->post('/create-checkout-session', function (Request $request, Response $res
 });
 
 $app->run();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+<?php
+use Stripe\Stripe;
+use Slim\Http\Request;
+use Slim\Http\Response;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$app = new \Slim\App;
+
+$app->add(function ($request, $response, $next) {
+    \Stripe\Stripe::setApiKey('sk_test_51IK8ySC7TRGrENFZDscbCb8YvQvzrABQDmNHvjU14VRaIsRubEgLD1l6xbJN4LaPlShoSd7HUYGWakFRoEj4ZjWa00iCXoPuUo');
+
+    return $next($request, $response);
+
+});
+
+$app->post('/checkout_session', function (Request $request, Response $response) {
+    $params = json_decode($request->getBody());
+    $payment_method_types = [
+        'usd' => ['card','alipay'],
+        'eur' => ['card','ideal', 'giropay'],
+        'pln' => ['card'],
+    ] ;
+    $session = \Stripe\Checkout\Session::create([
+        'success_url' => 'http://my.local/client/',
+        'cancel_url' => 'http://my.local/client/',
+        'mode' => 'payment',
+        'payment_method_types' => $payment_method_types[$params->currency],
+        'metadata' => [
+            'cause' => $params->cause,
+        ],
+        'submit_type' => 'donate',
+        'line_items' => [[
+            'price_data' => [
+                'currency' => $params->currency,
+                'product_data' => [
+                    'name' => 'qwert432y',
+                ],
+                'unit_amount' => $params->amount,
+            ],
+            'quantity' => 1,
+        ]],
+    ]);
+    return $response->withJson([ 'id' => $session->id ])->withStatus(200);
+});
+
+$app->run();*/
 
 
 
